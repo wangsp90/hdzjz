@@ -9,12 +9,17 @@ from .powerctl_vm import *
 import json
 from django.http import JsonResponse
 
-#主页，用来显示虚拟机列表
-def home(request):
+def admin(request):
     """
-    首页
+    管理员首页
     """
-    return render(request, 'home.html')
+    return render(request, 'admin.html')
+
+def user(request):
+    """
+    普通用户首页
+    """
+    return render(request, 'index.html')
 
 #虚拟机webconsole的调用
 def webmks(request):
@@ -59,8 +64,11 @@ def getvminfo(request):
 def vminfo_input(request):
     try:
         vminfo = get_vm_info()
+        namelist=[]
         for vm in vminfo:
             editvmtable(vm['vmname'],vm['ip_address'],vm['os'],vm['instanceuuid'])
+            namelist.append(vm['vmname'])
+        cleanvmtable(namelist)
         return HttpResponse("successful!")
     
     except Exception as e:

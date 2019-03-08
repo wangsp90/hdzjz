@@ -44,8 +44,7 @@
                         </div>
                         <ul class="nav navbar-nav pull-left m0">
                             <li class="active"><a href="javascript:void(0);">虚拟机列表</a></li>
-                            <li><a href="javascript:void(0);">关于我们</a></li>
-                            <li><a href="javascript:void(0);">联系我们</a></li>
+                            <button id="updatedb">更新</button>
                         </ul>
                         <div class="navbar-header pull-right">
                             <ul class="nav">
@@ -99,6 +98,7 @@
         </div>
     </div>
     <script>
+        //for table list
         $(function(){
                 function renderTpl(str, cfg) {
                     var re = /(#(.+?)#)/g;
@@ -130,8 +130,7 @@
                     }
                 });
             });
-    </script>
-    <script type="text/javascript">
+        //for power control button
     $("#table_body").on('click', '.poweron,.poweroff', function () {
                 if ($(this).hasClass("poweron")) {             
                         name = $(this).attr('name')
@@ -157,7 +156,14 @@
                 }
     })
 
+        //for Update button
+    $("#updatedb").on('click',function(){
+        alert( "test");
+    })
+
     </script>
+
+
 </body>
 
 </html>

@@ -11,10 +11,10 @@ def index(request):
 
 urlpatterns = (
     #path('', index),
-    path('', home),
+    path('', admin),
     path('vminfo',getvminfo),	
     path('webmks/',webmks),	#webconsole
-    path('input',vminfo_input),	#触发获取虚拟机列表，并更新数据库-----------get
+    path('update',vminfo_input),	#触发获取虚拟机列表，并更新数据库-----------get
     #power control VM
     path('poweronvm',poweronvm),
     path('poweroffvm',poweroffvm),
