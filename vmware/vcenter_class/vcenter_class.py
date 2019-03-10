@@ -28,25 +28,83 @@ class vCenter(object):
 	def get_vms_and_templates(self):
 		try:
 			atexit.register(Disconnect, self.si)
-			content = self.si.RetrieveContent()
+			content = self.si.content
 			container = content.rootFolder  # starting point to look into
 			viewType = [vim.VirtualMachine]  # object types to look for
 			recursive = True  # whether we should look into it recursively
 			containerView = content.viewManager.CreateContainerView(
 			    container, viewType, recursive)
-			children = containerView.view
-			return children
+			vm_children = containerView.view
+			return vm_children
 		except Exception as error:
 			return error
 
+	def get_datastores(self):
+		try:
+			atexit.register(Disconnect, self.si)
+			content = self.si.content
+			container = content.rootFolder  # starting point to look into
+			viewType = [vim.Datastore]  # object types to look for
+			recursive = True  # whether we should look into it recursively
+			containerView = content.viewManager.CreateContainerView(
+			    container, viewType, recursive)
+			ds_children = containerView.view
+			return ds_children
+		except Exception as error:
+			return error
 
+	def get_network(self):
+		try:
+			atexit.register(Disconnect, self.si)
+			content = self.si.content
+			container = content.rootFolder  # starting point to look into
+			viewType = [vim.Network]  # object types to look for
+			recursive = True  # whether we should look into it recursively
+			containerView = content.viewManager.CreateContainerView(
+			    container, viewType, recursive)
+			net_children = containerView.view
+			return net_children
+		except Exception as error:
+			return error
+
+	def get_host(self):
+		try:
+			atexit.register(Disconnect, self.si)
+			content = self.si.content
+			container = content.rootFolder  # starting point to look into
+			viewType = [vim.HostSystem]  # object types to look for
+			recursive = True  # whether we should look into it recursively
+			containerView = content.viewManager.CreateContainerView(
+			    container, viewType, recursive)
+			host_children = containerView.view
+			return host_children
+		except Exception as error:
+			return error
+
+	def get_spec(self):
+		try:
+			atexit.register(Disconnect, self.si)
+			content = self.si.content
+			spec_list = content.customizationSpecManager.info
+			return spec_list
+		except Exception as error:
+			return error
+
+			
+host="vc.hdzjj.local"
+user="administrator@vsphere.local"
+pwd="HD@it2019"
+
+hdzjzvc = vCenter()
+hdzjzvc.get_value(host,user,pwd)
 
 if __name__ == '__main__':
-	host="vc.hdzjj.local"
-	user="administrator@vsphere.local"
-	pwd="HD@it2019"
 
 	hdzjz = vCenter()
 	hdzjz.get_value(host,user,pwd)
-	vm_children = hdzjz.get_vms_and_templates()
-	print (vm_children)
+	vm_list = hdzjz.get_vms_and_templates()
+	ds_list = hdzjz.get_datastores()
+	network_list = hdzjz.get_network()
+	host_list = hdzjz.get_host()
+	spec_list = hdzjz.get_spec()
+	print (spec_list)

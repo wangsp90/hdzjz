@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-import vmware.list_vm
+from .vcenter_class import vcenter_class
 
 def poweronvm_task(iuuid):
-	vmlist=vmware.list_vm.get_vms_and_templates()
+	vmlist=vcenter_class.hdzjzvc.get_vms_and_templates()
 	for v in vmlist:
 		if v.summary.config.instanceUuid == iuuid:
 			v.PowerOn()
 			return 1
 
 def poweroffvm_task(iuuid):
-	vmlist=vmware.list_vm.get_vms_and_templates()
+	vmlist=vcenter_class.hdzjzvc.get_vms_and_templates()
 	for v in vmlist:
 		if v.summary.config.instanceUuid == iuuid:
 			v.PowerOff()

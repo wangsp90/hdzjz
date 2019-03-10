@@ -1,32 +1,9 @@
 # encoding: utf-8
 import atexit
+from .vcenter_class import vcenter_class 
 
-from pyVmomi import vmodl
-from pyVmomi import vim
-from .connect_vc import *
-from pyVim.connect import SmartConnectNoSSL, Disconnect
 
-#获取所有虚拟机以及模板，并返回所有对象
-def get_vms_and_templates():
-
-    try:
-        service_instance = get_si(host="vc.hdzjj.local",user="administrator@vsphere.local",pwd="HD@it2019")
-        atexit.register(Disconnect, service_instance)
-
-        content = service_instance.RetrieveContent()
-
-        container = content.rootFolder  # starting point to look into
-        viewType = [vim.VirtualMachine]  # object types to look for
-        recursive = True  # whether we should look into it recursively
-        containerView = content.viewManager.CreateContainerView(
-            container, viewType, recursive)
-
-        children = containerView.view
-        return children
-    except Exception as error:
-        return error
-
-#根据传入的虚拟机对象，获取虚拟机的相关summary信息，返回自己组的json
+#根据传入的虚拟机对象，获取单个虚拟机的相关summary信息，返回自己组的dict
 def vm_info(virtual_machine):
     """
     Print information for a particular virtual machine or recurse into a
@@ -60,11 +37,11 @@ def vm_info(virtual_machine):
     return vminfo
     
 
-#获取虚拟机对象，做成dict后，并排成列表
+#获取单个虚拟机对象dict，并排成列表
 def get_vm_info():
 
     try:
-        children=get_vms_and_templates()
+        children=vcenter_class.hdzjzvc.get_vms_and_templates()
         vmlist = []
         for child in children:
             if child.config.template:
