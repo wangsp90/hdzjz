@@ -24,7 +24,7 @@ class vCenter(object):
 			print ("Caught vmodl fault : " + error.msg)
 			return (False, error.msg)
 			return True, "ok"
-
+#get方法获取数据中心的各种数据信息集合
 	def get_vms_and_templates(self):
 		try:
 			atexit.register(Disconnect, self.si)
@@ -89,8 +89,23 @@ class vCenter(object):
 			return spec_list
 		except Exception as error:
 			return error
+#find方法，通过指定条件查找指定内容
+	def find_byip(self):
+		pass
 
-			
+	def find_bydnsname(self):
+		pass
+
+	def find_byuuid(self):
+		pass
+
+	def find_bydatastorepath(self):
+		pass
+
+	def find_byfolder(self):
+		pass
+
+#主机组组内测试环境			
 host="vc.hdzjj.local"
 user="administrator@vsphere.local"
 pwd="HD@it2019"
