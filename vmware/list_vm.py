@@ -1,5 +1,6 @@
 # encoding: utf-8
 import atexit
+from pyVmomi import vim, vmodl
 from .vcenter_class import vcenter_class 
 
 

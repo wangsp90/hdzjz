@@ -7,6 +7,7 @@ from .models import *
 from .vsphere6_generate_html5_console import *
 from .powerctl_vm import *
 import json
+from .vcenter_class import vcenter_class 
 from django.http import JsonResponse
 
 def admin(request):

@@ -156,11 +156,21 @@
                 }
     })
 
-        //for Update button
+       //for Update button
     $("#updatedb").on('click',function(){
-        alert( "test");
+        $.ajax({
+            url: 'update',
+            type: 'GET',
+            data: {},
+            success: function(){
+                alert("请刷新页面");
+            },
+            fail: function() {
+                alert("更新失败");
+            }
+        })
     })
-
+    
     </script>
 
 
