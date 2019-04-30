@@ -14,6 +14,7 @@ class vCenter(object):
 		self.user = ""
 		self.passwd = ""
 		self.token = ""
+		self.sessionid = ""
 
 	def get_value(self,vcname,user,passwd):
 		self.vcname = vcname
@@ -21,6 +22,7 @@ class vCenter(object):
 		self.passwd = passwd
 		authen_info = self.authen_info()
 		self.get_token(authen_info)
+
 #http post方法header参数
 	def authen_info(self):
 		user_pwd = self.user + ":" + self.passwd
@@ -33,16 +35,19 @@ class vCenter(object):
 		url = 'https://' + self.vcname + '/rest/com/vmware/cis/session'
 		r = requests.post(url,headers=authen_headers,verify=False)
 		self.token = json.loads(r.text)
+		self.sessionid = {'vmware-api-session-id':self.token["value"]}		
 
 	def get_vms(self,vmname):
-		headers = {'vmware-api-session-id':self.token["value"]}
 		url = 'https://' + self.vcname + '/rest/vcenter/vm/' + vmname
-		r = requests.get(url, headers=headers,verify=False)
+		r = requests.get(url, headers=self.sessionid,verify=False)
 		return r.text
+
+	def get_tasks(self):
+		url = 'https://' + self.vcname + '/rest/cis/tasks'
+		r = requests.get(url, headers=self.sessionid, verify=False)
+		print (r.text)
 
 if __name__ == '__main__':
 	zjzvc = vCenter()
 	zjzvc.get_value(vcname,user,passwd)
-	print (zjzvc.token)
-	vms = zjzvc.get_vms("vm-73")
-	print (vms)
+	zjzvc.get_tasks()
