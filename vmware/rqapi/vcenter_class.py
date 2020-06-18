@@ -1,11 +1,11 @@
 import json
 import base64
 import requests
-#璇佷功涓嶅畨鍏ㄦ椂锛孭OST鏂规硶闇�瑕佸姞verify=False锛岃繖鏃惰繛鎺ュ氨浼氭湁璀﹀憡锛岄渶瑕佺敤urllib3涓殑disable_warnings鏂规硶鍘婚櫎璀﹀憡
+#证书不安全时，POST方法需要加verify=False，这时连接就会有警告，需要用urllib3中的disable_warnings方法去除警告
 requests.packages.urllib3.disable_warnings()
 vcname = "vc.hdzjj.local"
 user = "administrator@vsphere.local"
-passwd = "HD@it2019"
+passwd = ""
 
 class vCenter(object):
 	"""docstring for vCenter"""
@@ -23,7 +23,7 @@ class vCenter(object):
 		authen_info = self.authen_info()
 		self.get_token(authen_info)
 
-#http post鏂规硶header鍙傛暟
+#http post方法header参数
 	def authen_info(self):
 		user_pwd = self.user + ":" + self.passwd
 		user_pwd_encode = user_pwd.encode()
